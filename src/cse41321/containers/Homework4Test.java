@@ -33,7 +33,7 @@ public class Homework4Test {
 
     @Test
     public void removePunctuation() {
-        Homework4.addLargeNumbers("18,274,364,583,929,273,748,525.00", "8,129,498,165,026,350,236");
+        Homework4.addLargeNumbers("18,274,364,583,929,273,748,525.0000", "8,129,498,165,026,350,236");
         assertTrue(this.consoleContent.toString().contains("632053620561894921"));
         assertTrue(this.consoleContent.toString().contains("52584737292938546347281"));
     }

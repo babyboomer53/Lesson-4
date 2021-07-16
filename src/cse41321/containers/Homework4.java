@@ -231,11 +231,18 @@ public class Homework4 {
 
     }
 
+    static class MyStack extends Stack<Character> {
+        @Override
+        public void push(E data) {
+            super.push(data);
+        }
+    }
+
     static void addLargeNumbers(String number1, String number2) {
         Stack<Character> firstNumber = new Stack<>();
         Stack<Character> secondNumber = new Stack<>();
         // Remove decimal points and commas from the first number.
-        String noPunctuation = number1.replaceAll("[,]|[.].*$", "");
+        String noPunctuation = number1.replaceAll("[,]|[.][0]*.*$", "");
         for (int index = 0; index < noPunctuation.length(); index++) {
             firstNumber.push(noPunctuation.charAt(index));
         }
