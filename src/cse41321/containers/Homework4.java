@@ -234,13 +234,15 @@ public class Homework4 {
     static void addLargeNumbers(String number1, String number2) {
         Stack<Character> firstNumber = new Stack<>();
         Stack<Character> secondNumber = new Stack<>();
-        String intermediateNumber = number1.replaceAll("[,]|[.].*$", "");
-        for (int index = 0; index < intermediateNumber.length(); index++) {
-            firstNumber.push(intermediateNumber.charAt(index));
+        // Remove decimal points and commas from the first number.
+        String noPunctuation = number1.replaceAll("[,]|[.].*$", "");
+        for (int index = 0; index < noPunctuation.length(); index++) {
+            firstNumber.push(noPunctuation.charAt(index));
         }
-        intermediateNumber = number2.replaceAll("[,]|[.].*$", "");
-        for (int index = 0; index < intermediateNumber.length(); index++) {
-            secondNumber.push(intermediateNumber.charAt(index));
+        // Remove decimal points and commas from the second number.
+        noPunctuation = number2.replaceAll("[,]|[.].*$", "");
+        for (int index = 0; index < noPunctuation.length(); index++) {
+            secondNumber.push(noPunctuation.charAt(index));
         }
         while (!firstNumber.isEmpty()) {
             System.out.print(firstNumber.pop());
@@ -250,10 +252,6 @@ public class Homework4 {
             System.out.print(secondNumber.pop());
         }
         System.out.println();
-        //Stack<Character> secondNumber = new Stack<>();
     }
 
-    public static void main(String[] arguments) {
-        addLargeNumbers("18,274,364,583,929,273,748,525.00", "5678");
-    }
 }
