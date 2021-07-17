@@ -12,6 +12,7 @@ import static org.testng.Assert.*;
 public class Homework4Test {
     private final PrintStream originalStdOut = System.out;
     private ByteArrayOutputStream consoleContent = new ByteArrayOutputStream();
+    String theAnswer = "18282494082094300098761";
 
     @BeforeMethod
     public void setUp() {
@@ -27,16 +28,27 @@ public class Homework4Test {
     }
 
     @Test
-    public void testStackPushAndPop() {
+    public void withReallyLongNumbers() {
+        // By the way, I couldn't find anything on the Internet that could add these two numbers!
         Homework4.addLargeNumbers("18274364583929273748525", "8129498165026350236");
-        assertTrue(this.consoleContent.toString().contains("52584737292938546347281"));
-        assertTrue(this.consoleContent.toString().contains("632053620561894921"));
+        assertTrue(this.consoleContent.toString().contains(theAnswer));
     }
 
     @Test
     public void removePunctuationAndFractionalComponent() {
         Homework4.addLargeNumbers("18,274,364,583,929,273,748,525.1234", "8,129,498,165,026,350,236.5678");
-        assertTrue(this.consoleContent.toString().contains("632053620561894921"));
-        assertTrue(this.consoleContent.toString().contains("52584737292938546347281"));
+        assertTrue(this.consoleContent.toString().contains(theAnswer));
+    }
+
+    @Test
+    public void morePunctuation() {
+        Homework4.addLargeNumbers("18_274_364_583_929_273_748_525.1234", "8_129_498_165_026_350_236.5678");
+        assertTrue(this.consoleContent.toString().contains(theAnswer));
+    }
+
+    @Test
+    public void preliminaryExam() {
+        Homework4.addLargeNumbers("592.25", "3,784.50");
+        assertTrue(this.consoleContent.toString().contains("4376"));
     }
 }

@@ -2,6 +2,8 @@ package cse41321.containers;
 
 import java.util.NoSuchElementException;
 
+import static org.testng.Assert.assertTrue;
+
 public class Homework4 {
 
     static class SinglyLinkedList<E> {
@@ -231,27 +233,48 @@ public class Homework4 {
 
     }
 
+    public class InvalidNumericCharacter extends Exception {
+        public InvalidNumericCharacter(String errorMessage) {
+            super(errorMessage);
+        }
+    }
+
     static void addLargeNumbers(String number1, String number2) {
-        Stack<Character> firstNumber = new Stack<>();
-        Stack<Character> secondNumber = new Stack<>();
+        Stack<Character> firstStack = new Stack<>();
+        Stack<Character> secondStack = new Stack<>();
+        Stack<Character> thirdStack = new Stack<>();
         // Remove any commas or fractional component from the first number.
-        String noPunctuation = number1.replaceAll("[,]|[.].*$", "");
+        String noPunctuation = number1.replaceAll("[,_]|[.].*$", "");
         for (int index = 0; index < noPunctuation.length(); index++) {
-            firstNumber.push(noPunctuation.charAt(index));
+            firstStack.push(noPunctuation.charAt(index));
         }
         // Remove any commas or fractional component from the second number.
-        noPunctuation = number2.replaceAll("[,]|[.].*$", "");
+        noPunctuation = number2.replaceAll("[,_]|[.].*$", "");
         for (int index = 0; index < noPunctuation.length(); index++) {
-            secondNumber.push(noPunctuation.charAt(index));
+            secondStack.push(noPunctuation.charAt(index));
         }
-        while (!firstNumber.isEmpty()) {
-            System.out.print(firstNumber.pop());
+
+        int result = 0;
+        String resultString;
+        Stack<Integer> carryStack = new Stack<>();
+
+        while (!firstStack.isEmpty() || !secondStack.isEmpty()) {
+            result = firstStack.isEmpty() ? 0 : Integer.parseInt(firstStack.pop().toString());
+            result += secondStack.isEmpty() ? 0 : Integer.parseInt(secondStack.pop().toString());
+            result += carryStack.isEmpty() ? 0 : carryStack.pop();
+            resultString = String.valueOf(result);
+            thirdStack.push(resultString.charAt(resultString.length() - 1));
+            if (resultString.length() == 2) {
+                carryStack.push(Integer.parseInt(String.valueOf(resultString.charAt(0))));
+            }
         }
-        System.out.println();
-        while (!secondNumber.isEmpty()) {
-            System.out.print(secondNumber.pop());
+        while (!thirdStack.isEmpty()) {
+            System.out.print(thirdStack.pop());
         }
         System.out.println();
     }
 
+    public static void main(String[] args) {
+        Homework4.addLargeNumbers("592.25", "3,784.50");
+    }
 }
