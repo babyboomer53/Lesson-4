@@ -233,48 +233,52 @@ public class Homework4 {
 
     }
 
-    public class InvalidNumericCharacter extends Exception {
+    public static class InvalidNumericCharacter extends Exception {
         public InvalidNumericCharacter(String errorMessage) {
             super(errorMessage);
         }
     }
 
+    /**
+     * @param number1
+     * @param number2
+     */
     static void addLargeNumbers(String number1, String number2) {
-        Stack<Character> firstStack = new Stack<>();
-        Stack<Character> secondStack = new Stack<>();
-        Stack<Character> thirdStack = new Stack<>();
+        Stack<Character> firstAddend = new Stack<>();
+        Stack<Character> secondAddend = new Stack<>();
+        Stack<Character> sum = new Stack<>();
         // Remove any commas or fractional component from the first number.
         String noPunctuation = number1.replaceAll("[,_]|[.].*$", "");
         for (int index = 0; index < noPunctuation.length(); index++) {
-            firstStack.push(noPunctuation.charAt(index));
+            firstAddend.push(noPunctuation.charAt(index));
         }
         // Remove any commas or fractional component from the second number.
         noPunctuation = number2.replaceAll("[,_]|[.].*$", "");
         for (int index = 0; index < noPunctuation.length(); index++) {
-            secondStack.push(noPunctuation.charAt(index));
+            secondAddend.push(noPunctuation.charAt(index));
         }
 
-        int result = 0;
-        String resultString;
-        Stack<Integer> carryStack = new Stack<>();
+        int intermediateResult = 0;
+        String digits;
+        Stack<Integer> carry = new Stack<>();
 
-        while (!firstStack.isEmpty() || !secondStack.isEmpty()) {
-            result = firstStack.isEmpty() ? 0 : Integer.parseInt(firstStack.pop().toString());
-            result += secondStack.isEmpty() ? 0 : Integer.parseInt(secondStack.pop().toString());
-            result += carryStack.isEmpty() ? 0 : carryStack.pop();
-            resultString = String.valueOf(result);
-            thirdStack.push(resultString.charAt(resultString.length() - 1));
-            if (resultString.length() == 2) {
-                carryStack.push(Integer.parseInt(String.valueOf(resultString.charAt(0))));
+        while (!firstAddend.isEmpty() || !secondAddend.isEmpty()) {
+            intermediateResult = firstAddend.isEmpty() ? 0 : Integer.parseInt(firstAddend.pop().toString());
+            intermediateResult += secondAddend.isEmpty() ? 0 : Integer.parseInt(secondAddend.pop().toString());
+            intermediateResult += carry.isEmpty() ? 0 : carry.pop();
+            digits = String.valueOf(intermediateResult);
+            sum.push(digits.charAt(digits.length() - 1));
+            if (digits.length() == 2) {
+                carry.push(Integer.parseInt(String.valueOf(digits.charAt(0))));
             }
         }
-        while (!thirdStack.isEmpty()) {
-            System.out.print(thirdStack.pop());
-        }
+
+        while (!sum.isEmpty()) System.out.print(sum.pop());
         System.out.println();
     }
 
     public static void main(String[] args) {
         Homework4.addLargeNumbers("592.25", "3,784.50");
+        Homework4.addLargeNumbers("18,274,364,583,929,273,748,525.1234", "8,129,498,165,026,350,236.5678");
     }
 }
