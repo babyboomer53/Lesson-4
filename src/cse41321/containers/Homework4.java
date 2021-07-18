@@ -249,11 +249,19 @@ public class Homework4 {
         Stack<Character> sum = new Stack<>();
         // Remove any commas or fractional component from the first number.
         String noPunctuation = number1.replaceAll("[,_]|[.].*$", "");
+        // Push the characters comprising the number onto a stack. This will effectively
+        // reverse  the order  of the numbers, so  that the lowest ordered digit will be
+        // pushed  last. The  digits will be retrievedfrom the stack in a last-in-first-
+        // out order, restoring their original order so that the number can be processed
+        // from right to left.
         for (int index = 0; index < noPunctuation.length(); index++) {
             firstAddend.push(noPunctuation.charAt(index));
         }
         // Remove any commas or fractional component from the second number.
         noPunctuation = number2.replaceAll("[,_]|[.].*$", "");
+        // This  process is identical to the one applied to the first argument (refer to
+        // comment above) except that the digits contained in this string will be pushed
+        // onto a separate stack.
         for (int index = 0; index < noPunctuation.length(); index++) {
             secondAddend.push(noPunctuation.charAt(index));
         }
@@ -263,8 +271,10 @@ public class Homework4 {
         Stack<Integer> carry = new Stack<>();
 
         while (!firstAddend.isEmpty() || !secondAddend.isEmpty()) {
-            intermediateResult = firstAddend.isEmpty() ? 0 : Integer.parseInt(firstAddend.pop().toString());
-            intermediateResult += secondAddend.isEmpty() ? 0 : Integer.parseInt(secondAddend.pop().toString());
+            if (firstAddend.isEmpty()) intermediateResult = 0;
+            else intermediateResult = Integer.parseInt(firstAddend.pop().toString());
+            if (secondAddend.isEmpty()) intermediateResult += 0;
+            else intermediateResult += Integer.parseInt(secondAddend.pop().toString());
             intermediateResult += carry.isEmpty() ? 0 : carry.pop();
             digits = String.valueOf(intermediateResult);
             sum.push(digits.charAt(digits.length() - 1));
@@ -279,6 +289,6 @@ public class Homework4 {
 
     public static void main(String[] args) {
         Homework4.addLargeNumbers("592.25", "3,784.50");
-        Homework4.addLargeNumbers("18,274,364,583,929,273,748,525.1234", "8,129,498,165,026,350,236.5678");
+        Homework4.addLargeNumbers("18,274,364,583,929,273,748,525.1234", "");
     }
 }

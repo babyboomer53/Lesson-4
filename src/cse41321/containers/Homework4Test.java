@@ -34,6 +34,36 @@ public class Homework4Test {
         assertTrue(this.consoleContent.toString().contains(theAnswer));
     }
 
+
+    @Test
+    public void withAnEmptyString() {
+        // By the way, I couldn't find anything on the Internet that could add these two numbers!
+        Homework4.addLargeNumbers("18274364583929273748525", "");
+        assertTrue(this.consoleContent.toString().contains("18274364583929273748525"));
+    }
+
+    @Test
+    public void theOtherStringIsMissing() {
+        // By the way, I couldn't find anything on the Internet that could add these two numbers!
+        Homework4.addLargeNumbers("", "8129498165026350236");
+        assertTrue(this.consoleContent.toString().contains("8129498165026350236"));
+    }
+
+
+    @Test
+    public void bothArgumentsAreEmpty() {
+        // By the way, I couldn't find anything on the Internet that could add these two numbers!
+        Homework4.addLargeNumbers("", "");
+        assertTrue(this.consoleContent.toString().contains(""));
+    }
+
+    @Test
+    public void theSameNumbersInReverseOrder() {
+        // By the way, I couldn't find anything on the Internet that could add these two numbers!
+        Homework4.addLargeNumbers("8129498165026350236", "18274364583929273748525");
+        assertTrue(this.consoleContent.toString().contains(theAnswer));
+    }
+
     @Test
     public void removePunctuationAndFractionalComponent() {
         Homework4.addLargeNumbers("18,274,364,583,929,273,748,525.1234", "8,129,498,165,026,350,236.5678");
