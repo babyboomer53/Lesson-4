@@ -289,6 +289,6 @@ public class Homework4 {
 
     public static void main(String[] args) {
         Homework4.addLargeNumbers("592.25", "3,784.50");
-        Homework4.addLargeNumbers("18,274,364,583,929,273,748,525.1234", "");
+        Homework4.addLargeNumbers("18,274,364,583,929,273,748,525.1234", "8,129,498,165,026,350,236.5678");
     }
 }
