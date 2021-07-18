@@ -248,7 +248,7 @@ public class Homework4 {
         Stack<Character> secondAddend = new Stack<>();
         Stack<Character> sum = new Stack<>();
         // Remove any commas or fractional component from the first number.
-        String noPunctuation = number1.replaceAll("[,_]|[.].*$", "");
+        String noPunctuation = number1.replaceAll("[^0-9]|[.].*$", "");
         // Push the characters comprising the number onto a stack. This will effectively
         // reverse  the order  of the numbers, so  that the lowest ordered digit will be
         // pushed  last. The  digits will be retrievedfrom the stack in a last-in-first-
@@ -258,7 +258,7 @@ public class Homework4 {
             firstAddend.push(noPunctuation.charAt(index));
         }
         // Remove any commas or fractional component from the second number.
-        noPunctuation = number2.replaceAll("[,_]|[.].*$", "");
+        noPunctuation = number2.replaceAll("[^0-9]|[.].*$", "");
         // This  process is identical to the one applied to the first argument (refer to
         // comment above) except that the digits contained in this string will be pushed
         // onto a separate stack.
