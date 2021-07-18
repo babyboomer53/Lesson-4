@@ -244,8 +244,8 @@ public class Homework4 {
      * @param number2
      */
     static void addLargeNumbers(String number1, String number2) {
-        Stack<Character> firstAddend = new Stack<>();
-        Stack<Character> secondAddend = new Stack<>();
+        Stack<Character> firstOperand = new Stack<>();
+        Stack<Character> secondOperand = new Stack<>();
         Stack<Character> sum = new Stack<>();
         // Remove any commas or fractional component from the first number.
         String noPunctuation = number1.replaceAll("[.].*$|[^0-9]", "");
@@ -257,7 +257,7 @@ public class Homework4 {
          from right to left.
         */
         for (int index = 0; index < noPunctuation.length(); index++) {
-            firstAddend.push(noPunctuation.charAt(index));
+            firstOperand.push(noPunctuation.charAt(index));
         }
         // Remove any commas or fractional component from the second number.
         noPunctuation = number2.replaceAll("[.].*$|[^0-9]", "");
@@ -267,25 +267,25 @@ public class Homework4 {
          onto a separate stack.
         */
         for (int index = 0; index < noPunctuation.length(); index++) {
-            secondAddend.push(noPunctuation.charAt(index));
+            secondOperand.push(noPunctuation.charAt(index));
         }
 
         int intermediateResult;
         String digits;
         Stack<Integer> carry = new Stack<>();
 
-        while (!firstAddend.isEmpty() || !secondAddend.isEmpty()) {
+        while (!firstOperand.isEmpty() || !secondOperand.isEmpty()) {
             intermediateResult = 0;
-            if (!firstAddend.isEmpty()) {
-                intermediateResult += Integer.parseInt(firstAddend.pop().toString());
+            if (!firstOperand.isEmpty()) {
+                intermediateResult += Integer.parseInt(firstOperand.pop().toString());
             }
-            if (!secondAddend.isEmpty()) {
-                intermediateResult += Integer.parseInt(secondAddend.pop().toString());
+            if (!secondOperand.isEmpty()) {
+                intermediateResult += Integer.parseInt(secondOperand.pop().toString());
             }
             intermediateResult += carry.isEmpty() ? 0 : carry.pop();
             digits = String.valueOf(intermediateResult);
             sum.push(digits.charAt(digits.length() - 1));
-            if (digits.length() == 2) {
+            if (digits.length() > 1) {
                 carry.push(Integer.parseInt(String.valueOf(digits.charAt(0))));
             }
         }
@@ -294,11 +294,13 @@ public class Homework4 {
         System.out.println();
     }
 
+
     public static void main(String[] args) {
-        String aBigNumber = "8,129,498,165,026,350,236.5678";
-        String aBiggerNumber = "18,274,364,583,929,273,748,525.1234";
+        String aLargeNumber = "8,129,498,165,026,350,236.5678";
+        String aLargerNumber = "18,274,364,583,929,273,748,525.1234";
         Homework4.addLargeNumbers("592.25", "3,784.50");
-        Homework4.addLargeNumbers(aBigNumber, aBiggerNumber);
+        Homework4.addLargeNumbers(aLargeNumber, aLargerNumber);
         Homework4.addLargeNumbers("100.101", "400.201");
     }
+
 }
