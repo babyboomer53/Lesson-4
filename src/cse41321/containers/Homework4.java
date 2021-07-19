@@ -263,33 +263,24 @@ class Homework4 {
         Stack<Character> firstOperand = new Stack<>();
         Stack<Character> secondOperand = new Stack<>();
         Stack<Character> sum = new Stack<>();
-        // Remove any commas or fractional component from the first number.
+        // Remove any commas or fractional components from the first argument.
         String noPunctuation = number1.replaceAll("[.].*$|[^0-9]", "");
-        /*
-         Push the characters comprising the number onto a stack. This will effectively
-         reverse  the order  of the numbers, so  that the lowest ordered digit will be
-         pushed  last. The digits will be retrieved from the stack in a last-in-first-
-         out order, restoring their original order so that the number can be processed
-         from right to left.
-        */
+        // Push the remaining characters from the first argument onto a stack.
         for (int index = 0; index < noPunctuation.length(); index++) {
             firstOperand.push(noPunctuation.charAt(index));
         }
-        // Remove any commas or fractional component from the second number.
+        // Remove any commas or fractional components from the second argument.
         noPunctuation = number2.replaceAll("[.].*$|[^0-9]", "");
-        /*
-         This  process is identical to the one applied to the first argument (refer to
-         comment above) except that the digits contained in this string will be pushed
-         onto a separate stack.
-        */
+        // Push the remaining characters from the second argument onto a stack.
         for (int index = 0; index < noPunctuation.length(); index++) {
             secondOperand.push(noPunctuation.charAt(index));
         }
 
-        int intermediateResult;
-        String digits;
-        Stack<Integer> carry = new Stack<>();
-
+        int intermediateResult; // This variable will act as the accumulator.
+        String digits;          // This object will store a string representation of the sum (e.g., "67").
+        Stack<Integer> carry = new Stack<>();   //
+        // While there are digits remaining in either operand (i.e., character stack),
+        // continue looping.
         while (!firstOperand.isEmpty() || !secondOperand.isEmpty()) {
             intermediateResult = 0;
             if (!firstOperand.isEmpty()) {
@@ -301,7 +292,8 @@ class Homework4 {
             intermediateResult += carry.isEmpty() ? 0 : carry.pop();
             digits = String.valueOf(intermediateResult);
             sum.push(digits.charAt(digits.length() - 1));
-            if (digits.length() > 1) {
+            // Did the addition operation result in a carry?
+            if (digits.length() > 1) {  // If the number of digits in the answer exceeds 1…
                 carry.push(Integer.parseInt(String.valueOf(digits.charAt(0))));
             }
         }
