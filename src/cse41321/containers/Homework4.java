@@ -281,6 +281,7 @@ class Homework4 {
         Stack<Integer> carry = new Stack<>();   //
         // While there are digits remaining in either operand (i.e., character stack),
         // continue looping.
+        // Perform the following loop until both stacks are empty.
         while (!firstOperand.isEmpty() || !secondOperand.isEmpty()) {
             intermediateResult = 0;
             intermediateResult += carry.isEmpty() ? 0 : carry.pop();

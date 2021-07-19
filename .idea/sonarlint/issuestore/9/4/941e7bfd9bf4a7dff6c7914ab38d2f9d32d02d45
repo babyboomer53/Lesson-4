@@ -1,8 +1,0 @@
-
-O
-java:S1118":Add a private constructor to hide the implicit public one.(£±’
-l
-java:S1206°"PThis class overrides "equals()" and should therefore also override "hashCode()".(Ý¢êÍýÿÿÿÿ
-p
-java:S2293È"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ã¿Àâ
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ôÂ©Œ
