@@ -3,7 +3,7 @@ package cse41321.containers;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Homework4 {
+class Homework4 {
 
     static class SinglyLinkedList<E> {
         // An element in a linked list
@@ -255,16 +255,6 @@ public class Homework4 {
 
     }
 
-    static void loadNumber(String source, Stack<Character> destination) {
-
-    }
-
-    public static class InvalidNumericCharacter extends Exception {
-        public InvalidNumericCharacter(String errorMessage) {
-            super(errorMessage);
-        }
-    }
-
     /**
      * @param number1
      * @param number2
@@ -318,6 +308,10 @@ public class Homework4 {
         for (Character digit : sum) System.out.print(digit);
         System.out.println();
     }
+
+}
+
+class DriverClass {
 
     public static void main(String[] args) {
         String aLargeNumber = "8,129,498,165,026,350,236.5678";
