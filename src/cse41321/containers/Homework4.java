@@ -25,7 +25,7 @@ class Homework4 {
                 return next;
             }
 
-            private SinglyLinkedList getOwner() {
+            private SinglyLinkedList<E> getOwner() {
                 return SinglyLinkedList.this;
             }
         }
@@ -283,13 +283,13 @@ class Homework4 {
         // continue looping.
         while (!firstOperand.isEmpty() || !secondOperand.isEmpty()) {
             intermediateResult = 0;
+            intermediateResult += carry.isEmpty() ? 0 : carry.pop();
             if (!firstOperand.isEmpty()) {
                 intermediateResult += Integer.parseInt(firstOperand.pop().toString());
             }
             if (!secondOperand.isEmpty()) {
                 intermediateResult += Integer.parseInt(secondOperand.pop().toString());
             }
-            intermediateResult += carry.isEmpty() ? 0 : carry.pop();
             digits = String.valueOf(intermediateResult);
             sum.push(digits.charAt(digits.length() - 1));
             // Did the addition operation result in a carry?
