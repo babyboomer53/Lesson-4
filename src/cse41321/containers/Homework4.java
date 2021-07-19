@@ -1,8 +1,7 @@
 package cse41321.containers;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import static org.testng.Assert.assertTrue;
 
 public class Homework4 {
 
@@ -197,7 +196,7 @@ public class Homework4 {
         }
     }
 
-    static class Stack<E> {
+    static class Stack<E> implements Iterable<E> {
         private SinglyLinkedList<E> list = new SinglyLinkedList<E>();
 
         public void push(E data) {
@@ -227,6 +226,33 @@ public class Homework4 {
         public boolean isEmpty() {
             return list.isEmpty();
         }
+
+        private class Stackerator implements Iterator<E> {
+            private SinglyLinkedList<E>.Element elem;
+
+            public Stackerator() {
+                elem = Stack.this.list.getHead();
+            }
+
+            public boolean hasNext() {
+                return elem != null;
+            }
+
+            public E next() {
+                if (hasNext()) {
+                    E data = elem.getData();
+                    elem = elem.getNext();
+                    return data;
+                } else {
+                    throw new NoSuchElementException();
+                }
+            }
+        }
+
+        public Iterator<E> iterator() {
+            return new Stackerator();
+        }
+
     }
 
     static void loadNumber(String source, Stack<Character> destination) {
@@ -252,7 +278,7 @@ public class Homework4 {
         /*
          Push the characters comprising the number onto a stack. This will effectively
          reverse  the order  of the numbers, so  that the lowest ordered digit will be
-         pushed  last. The  digits will be retrievedfrom the stack in a last-in-first-
+         pushed  last. The digits will be retrieved from the stack in a last-in-first-
          out order, restoring their original order so that the number can be processed
          from right to left.
         */
@@ -289,11 +315,9 @@ public class Homework4 {
                 carry.push(Integer.parseInt(String.valueOf(digits.charAt(0))));
             }
         }
-
-        while (!sum.isEmpty()) System.out.print(sum.pop());
+        for (Character digit : sum) System.out.print(digit);
         System.out.println();
     }
-
 
     public static void main(String[] args) {
         String aLargeNumber = "8,129,498,165,026,350,236.5678";
