@@ -5,5 +5,471 @@
 The purpose of this exercises is to implement an algorithm that uses stacks to add whole numbers of any size.
 
 The largest number that Java can store is around 9.23 quintillion (9,223,372,036,854,775,807 to be exact). Integers of
-this magnitude are provided for by Java's primitive data type called "long." Manipulating anything larger will 
+this magnitude are supported by Java's primitive data type called "long." Manipulating anything larger will 
 require some sleight of hand.
+
+In this exercise I endeavor to solve this dilemma by using the approach described in the instructor's problem statement.
+Specifically, in this algorithm, numbers are processed as strings (i.e., a sequence of characters) rather than in their
+binary "twos complement" format. Java supports integers only up to 9.23 quintillion. If an integer of type long is 
+stored in eight bytes, you might be wondering what happened to the eighth bit. Why isn't the largest integer twice the
+size? Well, a discussion about the idiosyncrasies of twos complement representation of integers is beyond the scope of
+this document. Regardless, 9.23 quintillion is a very big number. But it *does* represent the limit in Java for positive
+integers. How would one surmount this obstacle?
+
+I think that the algorithm proposed by the instructor is "too cool for school!" Perhaps it's commonplace in the annals
+of computer science, but it's the first time *I've* seen it.
+### Background
+The objective is to circumvent the constraints imposed by the Java compiler; or any other language for that matter. When
+representing a number as a sequence of characters, the possibilities are practically limitless. We're talking about
+numbers that could contain over two billion digits! We still have to do the math, but we never have to operate on
+anything larger than single-digit operands! How does it all work? Without further ado, here is the diagram that was
+provided:
+
+![](algorithm-diagram.png)
+
+I didn't really rely on this when formulating my solution, but i got the gist.
+
+Here is the pseudocode that was provided:
+```text
+addLargeNumbers(number1, number2)
+    read the numerals of the first number and store them on one stack
+    read the numerals of the second number and store them on another stack
+    var result := 0
+    while at least one stack is not empty
+        pop a numeral from each nonempty stack and add them to result
+        push the unit part of addition onto a new stack called the result stack
+        store the carry part of the addition in result
+        push result onto the result stack if it is not zero
+    pop numbers from the result stack and display them
+```
+I used it in combination with the previous diagram to understand the algorithm. Once I had a pretty good grasp of the
+concept, I was on my way!
+### Solution
+While implementing my solution, I used a Stack class from the example code provided by the instructor. For the
+SinglyLinkedList class used by the Stack class, I also used source code contained in the examples provided by the
+instructor.
+#### Source Code
+##### Homework4
+```java
+package cse41321.containers;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+class Homework4 {
+
+    static class SinglyLinkedList<E> {
+        // An element in a linked list
+        public class Element {
+            private E data;
+            private Element next;
+
+            // Only allow SinglyLinkedList to construct Elements
+            private Element(E data) {
+                this.data = data;
+                this.next = null;
+            }
+
+            public E getData() {
+                return data;
+            }
+
+            public Element getNext() {
+                return next;
+            }
+
+            private SinglyLinkedList<E> getOwner() {
+                return SinglyLinkedList.this;
+            }
+        }
+
+        private Element head;
+        private Element tail;
+        private int size;
+
+        public Element getHead() {
+            return head;
+        }
+
+        public Element getTail() {
+            return tail;
+        }
+
+        public int getSize() {
+            return size;
+        }
+
+        public boolean isEmpty() {
+            return size == 0;
+        }
+
+        public Element insertHead(E data) {
+            Element newElement = new Element(data);
+
+            if (isEmpty()) {
+                // Insert into empty list
+                head = newElement;
+                tail = newElement;
+            } else {
+                // Insert into non-empty list
+                newElement.next = head;
+                head = newElement;
+            }
+
+            ++size;
+
+            return newElement;
+        }
+
+        public Element insertTail(E data) {
+            Element newElement = new Element(data);
+
+            if (isEmpty()) {
+                // Insert into empty list
+                head = newElement;
+                tail = newElement;
+            } else {
+                // Insert into non-empty list
+                tail.next = newElement;
+                tail = newElement;
+            }
+
+            ++size;
+
+            return newElement;
+        }
+
+        public Element insertAfter(Element element, E data)
+                throws IllegalArgumentException {
+            // Check pre-conditions
+            if (element == null) {
+                throw new IllegalArgumentException(
+                        "Argument 'element' must not be null");
+            }
+            if (element.getOwner() != this) {
+                throw new IllegalArgumentException(
+                        "Argument 'element' does not belong to this list");
+            }
+
+            // Insert new element
+            Element newElement = new Element(data);
+            if (tail == element) {
+                // Insert new tail
+                element.next = newElement;
+                tail = newElement;
+            } else {
+                // Insert into middle of list
+                newElement.next = element.next;
+                element.next = newElement;
+            }
+
+            ++size;
+
+            return newElement;
+        }
+
+        public E removeHead() throws NoSuchElementException {
+            // Check pre-conditions
+            if (isEmpty()) {
+                throw new NoSuchElementException("Cannot remove from empty list");
+            }
+
+            // Remove the head
+            Element oldHead = head;
+            if (size == 1) {
+                // Handle removal of the last element
+                head = null;
+                tail = null;
+            } else {
+                head = head.next;
+            }
+
+            --size;
+
+            return oldHead.data;
+        }
+
+        // Note that there is no removeTail.  This cannot be implemented
+        // efficiently because it would require O(n) to scan from head until
+        // reaching the item _before_ tail.
+
+        public E removeAfter(Element element)
+                throws IllegalArgumentException, NoSuchElementException {
+            // Check pre-conditions
+            if (element == null) {
+                throw new IllegalArgumentException(
+                        "Argument 'element' must not be null");
+            }
+            if (element.getOwner() != this) {
+                throw new IllegalArgumentException(
+                        "Argument 'element' does not belong to this list");
+            }
+            if (element == tail) {
+                throw new IllegalArgumentException(
+                        "Argument 'element' must have a non-null next element");
+            }
+
+            // Remove element
+            Element elementToRemove = element.next;
+            if (elementToRemove == tail) {
+                // Remove the tail
+                element.next = null;
+                tail = element;
+            } else {
+                // Remove from middle of list
+                element.next = elementToRemove.next;
+            }
+
+            --size;
+
+            return elementToRemove.data;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            SinglyLinkedList<?> that = (SinglyLinkedList<?>) o;
+
+            if (this.size != that.size) return false;
+
+            // Return whether all elements are the same
+            SinglyLinkedList<?>.Element thisElem = this.getHead();
+            SinglyLinkedList<?>.Element thatElem = that.getHead();
+            while (thisElem != null && thatElem != null) {
+                if (!thisElem.getData().equals(thatElem.getData())) {
+                    return false;
+                }
+                thisElem = thisElem.getNext();
+                thatElem = thatElem.getNext();
+            }
+
+            return true;
+        }
+    }
+
+    static class Stack<E> implements Iterable<E> {
+        private SinglyLinkedList<E> list = new SinglyLinkedList<E>();
+
+        public void push(E data) {
+            list.insertHead(data);
+        }
+
+        public E pop() throws NoSuchElementException {
+            if (isEmpty()) {
+                throw new NoSuchElementException();
+            }
+
+            return list.removeHead();
+        }
+
+        public E peek() throws NoSuchElementException {
+            if (isEmpty()) {
+                throw new NoSuchElementException();
+            }
+
+            return list.getHead().getData();
+        }
+
+        public int getSize() {
+            return list.getSize();
+        }
+
+        public boolean isEmpty() {
+            return list.isEmpty();
+        }
+
+        private class Stackerator implements Iterator<E> {
+            private SinglyLinkedList<E>.Element elem;
+
+            public Stackerator() {
+                elem = Stack.this.list.getHead();
+            }
+
+            public boolean hasNext() {
+                return elem != null;
+            }
+
+            public E next() {
+                if (hasNext()) {
+                    E data = elem.getData();
+                    elem = elem.getNext();
+                    return data;
+                } else {
+                    throw new NoSuchElementException();
+                }
+            }
+        }
+
+        public Iterator<E> iterator() {
+            return new Stackerator();
+        }
+
+    }
+
+    /**
+     * @param number1
+     * @param number2
+     */
+    static void addLargeNumbers(String number1, String number2) {
+        Stack<Character> firstOperand = new Stack<>();
+        Stack<Character> secondOperand = new Stack<>();
+        Stack<Character> sum = new Stack<>();
+        // Remove any commas or fractional components from the first argument.
+        String noPunctuation = number1.replaceAll("[.].*$|[^0-9]", "");
+        // Push the remaining characters from the first argument onto a stack.
+        for (int index = 0; index < noPunctuation.length(); index++) {
+            firstOperand.push(noPunctuation.charAt(index));
+        }
+        // Remove any commas or fractional components from the second argument.
+        noPunctuation = number2.replaceAll("[.].*$|[^0-9]", "");
+        // Push the remaining characters from the second argument onto a stack.
+        for (int index = 0; index < noPunctuation.length(); index++) {
+            secondOperand.push(noPunctuation.charAt(index));
+        }
+
+        int intermediateResult; // This variable will act as the accumulator.
+        String digits;          // This object will store a string representation of the sum (e.g., "67").
+        Stack<Integer> carry = new Stack<>();   //
+        // While there are digits remaining in either operand (i.e., character stack),
+        // continue looping.
+        // Perform the following loop until both stacks are empty.
+        while (!firstOperand.isEmpty() || !secondOperand.isEmpty()) {
+            intermediateResult = 0;
+            intermediateResult += carry.isEmpty() ? 0 : carry.pop();
+            if (!firstOperand.isEmpty()) {
+                intermediateResult += Integer.parseInt(firstOperand.pop().toString());
+            }
+            if (!secondOperand.isEmpty()) {
+                intermediateResult += Integer.parseInt(secondOperand.pop().toString());
+            }
+            digits = String.valueOf(intermediateResult);
+            sum.push(digits.charAt(digits.length() - 1));
+            // Did the addition operation result in a carry?
+            if (digits.length() > 1) {  // If the number of digits in the answer exceeds 1…
+                carry.push(Integer.parseInt(String.valueOf(digits.charAt(0))));
+            }
+        }
+        for (Character digit : sum) System.out.print(digit);
+        System.out.println();
+    }
+
+}
+
+class DriverClass {
+
+    public static void main(String[] args) {
+        String aLargeNumber = "8,129,498,165,026,350,236.5678";
+        String aLargerNumber = "18,274,364,583,929,273,748,525.1234";
+        Homework4.addLargeNumbers("592.25", "3,784.50");
+        Homework4.addLargeNumbers(aLargeNumber, aLargerNumber);
+        Homework4.addLargeNumbers("100.101", "400.201");
+    }
+
+}
+```
+##### Homework4Test
+```java
+package cse41321.containers;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.testng.Assert.*;
+
+public class Homework4Test {
+    private final PrintStream originalStdOut = System.out;
+    private ByteArrayOutputStream consoleContent = new ByteArrayOutputStream();
+    private final String theAnswer = "18282494082094300098761";
+
+    @BeforeMethod
+    public void setUp() {
+        // Redirect all System.out to consoleContent.
+        System.setOut(new PrintStream(this.consoleContent));
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        System.setOut(this.originalStdOut);     // Restore original standard out
+        // Clear the consoleContent.
+        this.consoleContent = new ByteArrayOutputStream();
+    }
+
+    @Test
+    public void withReallyLongNumbers() {
+        // By the way, I couldn't find anything on the Internet that could add these two numbers!
+        Homework4.addLargeNumbers("18274364583929273748525", "8129498165026350236");
+        assertTrue(this.consoleContent.toString().contains(theAnswer));
+    }
+
+    @Test
+    public void numbersContainingSpaces() {
+        Homework4.addLargeNumbers("18 274 364 583 929 273 748 525", "8 129 498 165 026 350 236");
+        assertTrue(this.consoleContent.toString().contains(theAnswer));
+    }
+
+    @Test
+    public void withAnEmptyString() {
+        Homework4.addLargeNumbers("18274364583929273748525", "");
+        assertTrue(this.consoleContent.toString().contains("18274364583929273748525"));
+    }
+
+    @Test
+    public void theOtherStringIsEmpty() {
+        Homework4.addLargeNumbers("", "8129498165026350236");
+        assertTrue(this.consoleContent.toString().contains("8129498165026350236"));
+    }
+
+
+    @Test
+    public void bothArgumentsAreEmpty() {
+        Homework4.addLargeNumbers("", "");
+        assertTrue(this.consoleContent.toString().contains(""));
+    }
+
+    @Test
+    public void theSameArgumentsInReverseOrder() {
+        Homework4.addLargeNumbers("8129498165026350236", "18274364583929273748525");
+        assertTrue(this.consoleContent.toString().contains(theAnswer));
+    }
+
+    @Test
+    public void removePunctuationAndFractionalComponent() {
+        Homework4.addLargeNumbers("18,274,364,583,929,273,748,525.1234", "8,129,498,165,026,350,236.5678");
+        assertTrue(this.consoleContent.toString().contains(theAnswer));
+    }
+
+    @Test
+    public void invalidCharacters() {
+        Homework4.addLargeNumbers("ABC.DEF", "GHI.JKL");
+        assertTrue(this.consoleContent.toString().contains(""));
+    }
+
+    @Test
+    public void morePunctuation() {
+        Homework4.addLargeNumbers("18_274_364_583_929_273_748_525.1234", "8_129_498_165_026_350_236.5678");
+        assertTrue(this.consoleContent.toString().contains(theAnswer));
+    }
+
+    @Test
+    public void preliminaryExam() {
+        Homework4.addLargeNumbers("592.25", "3,784.50");
+        assertTrue(this.consoleContent.toString().contains("4376"));
+    }
+}
+```
+## Output
+![](test-results.png)
+![](console-output.png)
+## Summary
+I'm out of practice interpreting pseudocode
+I'm still fond of flowcharts
+I added an iterator to the Stack class so that I could use enhanced for-loops
+I used git to create separate ranch while adding the iterator
+While the algorithm for adding string representations of integers turned out to be fairly straightforward, there were a
+couple of subtle nuances.
