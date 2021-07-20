@@ -256,27 +256,42 @@ class Homework4 {
     }
 
     /**
-     * @param number1
-     * @param number2
+     * This  method accepts  two  string  arguments. Each  argument  is expected to
+     * contain  numeric characters.  Invalid  characters will  be  removed prior to
+     * processing.  The arguments  will be  added together  and the  result will be
+     * displayed on the console.
+     *
+     * This  method can  accommodate numbers  much  larger than  those supported  by
+     * Java's  <i>long</i>  integer type  (approx. 9.23 quintillion). Theoretically,
+     * this  method can  accommodate integers  that are  two billion  digits long  –
+     * although nothing approaching that magnitude has been tested.
+     *
+     * Arguments containing empty strings are tolerated and are generally ignored.
+     * An argument consisting of an empty string is equivalent to the value zero.
+     * When both arguments are empty, no output is generated.
+     *
+     * @param number1 a String representing an integer value
+     * @param number2 a String representing an integer value
      */
     static void addLargeNumbers(String number1, String number2) {
         Stack<Character> firstOperand = new Stack<>();
         Stack<Character> secondOperand = new Stack<>();
-        Stack<Character> sum = new Stack<>();
+        Stack<Character> theSum = new Stack<>();
         // Remove any commas or fractional components from the first argument.
         String noPunctuation = number1.replaceAll("[.].*$|[^0-9]", "");
-        // Push the remaining characters from the first argument onto a stack.
+        // Push the remaining characters in the first argument onto a stack.
         for (int index = 0; index < noPunctuation.length(); index++) {
             firstOperand.push(noPunctuation.charAt(index));
         }
         // Remove any commas or fractional components from the second argument.
         noPunctuation = number2.replaceAll("[.].*$|[^0-9]", "");
-        // Push the remaining characters from the second argument onto a stack.
+        // Push the remaining characters in the second argument onto a stack.
         for (int index = 0; index < noPunctuation.length(); index++) {
             secondOperand.push(noPunctuation.charAt(index));
         }
         int intermediateResult;
         int carry = 0;
+        // Repeat the following steps until both stacks are empty.
         while (!firstOperand.isEmpty() || !secondOperand.isEmpty()) {
             intermediateResult = 0;
             intermediateResult += carry;
@@ -286,10 +301,11 @@ class Homework4 {
             if (!secondOperand.isEmpty()) {
                 intermediateResult += Integer.parseInt(secondOperand.pop().toString());
             }
-            sum.push(Integer.toString(intermediateResult % 10).charAt(0));  // Yikes!
-            carry = intermediateResult / 10;
+            // Convert the integer (int) result to char and push it onto the stack.
+            theSum.push(Integer.toString(intermediateResult % 10).charAt(0));  // Yikes!
+            carry = intermediateResult / 10;    // Save the carry amount.
         }
-        for (Character digit : sum) System.out.print(digit);
+        for (Character digit : theSum) System.out.print(digit);
         System.out.println();
     }
 
