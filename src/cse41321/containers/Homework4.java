@@ -275,28 +275,19 @@ class Homework4 {
         for (int index = 0; index < noPunctuation.length(); index++) {
             secondOperand.push(noPunctuation.charAt(index));
         }
-
-        int intermediateResult; // This variable will act as the accumulator.
-        String digits;          // This object will store a string representation of the sum (e.g., "67").
-        Stack<Integer> carry = new Stack<>();   //
-        // While there are digits remaining in either operand (i.e., character stack),
-        // continue looping.
-        // Perform the following loop until both stacks are empty.
+        int intermediateResult;
+        int carry = 0;
         while (!firstOperand.isEmpty() || !secondOperand.isEmpty()) {
             intermediateResult = 0;
-            intermediateResult += carry.isEmpty() ? 0 : carry.pop();
+            intermediateResult += carry;
             if (!firstOperand.isEmpty()) {
                 intermediateResult += Integer.parseInt(firstOperand.pop().toString());
             }
             if (!secondOperand.isEmpty()) {
                 intermediateResult += Integer.parseInt(secondOperand.pop().toString());
             }
-            digits = String.valueOf(intermediateResult);
-            sum.push(digits.charAt(digits.length() - 1));
-            // Did the addition operation result in a carry?
-            if (digits.length() > 1) {  // If the number of digits in the answer exceeds 1…
-                carry.push(Integer.parseInt(String.valueOf(digits.charAt(0))));
-            }
+            sum.push(Integer.toString(intermediateResult % 10).charAt(0));  // Yikes!
+            carry = intermediateResult / 10;
         }
         for (Character digit : sum) System.out.print(digit);
         System.out.println();
