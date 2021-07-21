@@ -476,6 +476,25 @@ public class Homework4Test {
 ### Homework4::addLargeNumbers()
 ![](console-output.png)
 ## Summary
+Getting an early start on this assignment was both a blessing and a curse. Starting early gave me plenty of time to
+address those hidden bugs that inevitably pop up. On the other hand, having that much time allowed me to indulge my
+obsessive nature; constantly finding little things that I could improve.
+
+I was able to understand the concept very quickly, but the road to a successful implementation was bumpier than I
+expected. On at least two occasions I had to reengineer what initially appeared to be viable solutions. Consequently,
+although I thought I'd finished this project on at least a couple of occasions, once again I'm up against the clock.
+Okay. I'm exaggerating a bit. I have only the readme file left to finish. Earlier this morning I eliminated the last bug.
+It really wasn't a bug, but a section of code that I got could benefit from a facelift. Some of the constructs in my
+original solution weren't very sophisticated, and not representative of my best work.
+
+Recently I got the impression that some of my fellow students are able to finish these assignments in a couple of days!!
+Wow! Are these assignments really that easy?! What's wrong with *me*? Of course I don't have anything concrete on which
+to base my suspicions; the evidence is purely circumstantial. Besides, I remember the days when I could do that. In fact,
+in a previous class I turned in five assignments in one week.  The assignments were easier back then, and even though it
+was an introductory class, much of the material was review. But I digress…
+
+
+
 I'm out of practice interpreting pseudocode
 I'm still fond of flowcharts
 I added an iterator to the Stack class so that I could use enhanced for-loops
