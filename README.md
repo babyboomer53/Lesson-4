@@ -42,7 +42,7 @@ addLargeNumbers(number1, number2)
         push result onto the result stack if it is not zero
     pop numbers from the result stack and display them
 ```
-The combination of the diagram and this pseudocode helped illustrate the concept. Once I understood the concept, I was
+The combination of the diagram and this pseudocode helped clarify the concept. Once I understood the concept, I was
 good to go.
 ### Solution
 While implementing my solution, I used a Stack class from the example code provided by the instructor. For the
