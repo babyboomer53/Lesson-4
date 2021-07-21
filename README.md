@@ -9,7 +9,7 @@ this magnitude are supported by Java's primitive data type called "long." Manipu
 require some sleight of hand.
 
 In this exercise I endeavor to solve this dilemma by using the approach described in the instructor's problem statement.
-Specifically, in this algorithm, numbers are processed as strings (i.e., a sequence of characters) rather than in their
+Specifically, in his algorithm, numbers are processed as strings (i.e., a sequence of characters) rather than in their
 binary "twos complement" format. Java supports integers only up to 9.23 quintillion. If an integer of type long is 
 stored in eight bytes, you might be wondering what happened to the eighth bit. Why isn't the largest integer twice the
 size? Well, a discussion about the idiosyncrasies of twos complement representation of integers is beyond the scope of
@@ -27,7 +27,7 @@ provided:
 
 ![](algorithm-diagram.png)
 
-I didn't really rely on this when formulating my solution, but i got the gist.
+After studying the diagram a bit, I moved on to the pseudocode.
 
 Here is the pseudocode that was provided:
 ```text
@@ -42,12 +42,26 @@ addLargeNumbers(number1, number2)
         push result onto the result stack if it is not zero
     pop numbers from the result stack and display them
 ```
-I used it in combination with the previous diagram to understand the algorithm. Once I had a pretty good grasp of the
-concept, I was on my way!
+The combination of the diagram in this pseudocode helped illustrate the concept. Once I understood the concept, I was
+good to go.
 ### Solution
 While implementing my solution, I used a Stack class from the example code provided by the instructor. For the
-SinglyLinkedList class used by the Stack class, I also used source code contained in the examples provided by the
+**SinglyLinkedList** class used by the **Stack** class, I borrowed more code from the examples provided by the
 instructor.
+
+I took this opportunity to learn more about iterators. Toward that end, I modified the **Stack** class to implement the
+Iterable interface, and added to it the requisite *iterator* method. Finally, I created an **Iterator** class. I was 
+able to utilize this extended capability when I invoked an enhanced for-loop to dump the contents of one of the 
+**Stack** objects. 😃
+
+This project contains a a test class (**Homework4Test**) and a driver class (**DriverClass**). The test class contains
+a suite of ten unit tests, which exercise the *addLargeNumbers()* method using a variety of arguments. The Driver class
+contains a *main()* method, which calls  *addLargeNumbers()* several times.
+
+Incidentally, while developing a version of the program that used a **Stack** that implements the **Iterable** 
+interface, I was able to use *Git* to create a divergent branch of the project. Once I had the **Iterable** 
+implementation working, I merged the branches to make it whole again. 😃
+
 #### Source Code
 ##### Homework4
 ```java
@@ -431,8 +445,7 @@ public class Homework4Test {
         Homework4.addLargeNumbers("", "8129498165026350236");
         assertTrue(this.consoleContent.toString().contains("8129498165026350236"));
     }
-
-
+    
     @Test
     public void bothArgumentsAreEmpty() {
         Homework4.addLargeNumbers("", "");
@@ -478,26 +491,33 @@ public class Homework4Test {
 ## Summary
 Getting an early start on this assignment was both a blessing and a curse. Starting early gave me plenty of time to
 address those hidden bugs that inevitably pop up. On the other hand, having that much time allowed me to indulge my
-obsessive nature; constantly finding little things that I could improve.
+obsessive nature. I'm constantly finding little things that I can improve, not the least of which is this README file.
 
 I was able to understand the concept very quickly, but the road to a successful implementation was bumpier than I
-expected. On at least two occasions I had to reengineer what initially appeared to be viable solutions. Consequently,
+expected. On at least two occasions I had to reengineer what initially appeared to be a viable solutions. Consequently,
 although I thought I'd finished this project on at least a couple of occasions, once again I'm up against the clock.
-Okay. I'm exaggerating a bit. I have only the readme file left to finish. Earlier this morning I eliminated the last bug.
-It really wasn't a bug, but a section of code that I got could benefit from a facelift. Some of the constructs in my
-original solution weren't very sophisticated, and not representative of my best work.
+Okay. I'm exaggerating a bit. I have only this README file left to finish. Earlier this morning I eliminated the last
+bug. It really wasn't a bug, but a section of code that I thought could benefit from a facelift. Some of the constructs
+in my original solution weren't very sophisticated, and not representative of my best work.
 
 Recently I got the impression that some of my fellow students are able to finish these assignments in a couple of days!!
-Wow! Are these assignments really that easy?! What's wrong with *me*? Of course I don't have anything concrete on which
-to base my suspicions; the evidence is purely circumstantial. Besides, I remember the days when I could do that. In fact,
-in a previous class I turned in five assignments in one week.  The assignments were easier back then, and even though it
-was an introductory class, much of the material was review. But I digress…
+Wow! Are these assignments really that easy?! What's wrong with *me*? Of course I don't have concrete evidence
+on which to base my suspicions; the evidence is purely circumstantial. Besides, I remember the days when I could do the
+same. In fact, in a previous class I turned in five assignments in one week.  The assignments were easier back then, and
+even though it was an introductory class, much of the material was review. But I digress…
 
+I'm discovering that I'm not as adept as I once was at interpreting pseudocode. Much to my amusement, my final
+implementation of the algorithm looked a lot more like the pseudocode than it did when I started! I remember the days
+when we used flowcharts. I *miss* flowcharts. Where's my copy of Visio? I was an early adopter of that application. I
+thought it was the bees knees! I have nothing against pseudocode. I'm just out of practice.
 
+One of the ways in which I'm trying to get control of my obsessive behavior is to set deadlines. It's 8:10 PM on the
+night of the due date, and I'm giving myself until 9 PM to hit the submit button. At this point, there really isn't
+anything I could do to make it better. During this project I've accomplished most of the things I wanted to. If there's
+one thing missing from this assignment, it's the (better) use of Exceptions. I wanted to write my own Exception class,
+but didn't get around to it.
 
-I'm out of practice interpreting pseudocode
-I'm still fond of flowcharts
-I added an iterator to the Stack class so that I could use enhanced for-loops
-I used git to create separate ranch while adding the iterator
-While the algorithm for adding string representations of integers turned out to be fairly straightforward, there were a
-couple of subtle nuances.
+Okay, I guess that's gonna have to be *it*. I'll close with the usual caveat, that this README is a work in progress,
+with a format that is constantly evolving. One of these days I'll do some research to find out whether there is an
+industry-standard layout.
+ 
