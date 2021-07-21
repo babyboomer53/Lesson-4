@@ -293,8 +293,8 @@ class Homework4 {
         int carry = 0;
         // Repeat the following steps until both stacks are empty.
         while (!firstOperand.isEmpty() || !secondOperand.isEmpty()) {
-            intermediateResult = 0;
-            intermediateResult += carry;
+            // intermediateResult = 0;  Hmm.., is this statement really necessary?
+            intermediateResult = carry; // I changed the operator from '+=' to '='
             if (!firstOperand.isEmpty()) {
                 intermediateResult += Integer.parseInt(firstOperand.pop().toString());
             }

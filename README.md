@@ -42,7 +42,7 @@ addLargeNumbers(number1, number2)
         push result onto the result stack if it is not zero
     pop numbers from the result stack and display them
 ```
-The combination of the diagram in this pseudocode helped illustrate the concept. Once I understood the concept, I was
+The combination of the diagram and this pseudocode helped illustrate the concept. Once I understood the concept, I was
 good to go.
 ### Solution
 While implementing my solution, I used a Stack class from the example code provided by the instructor. For the
@@ -56,7 +56,8 @@ able to utilize this extended capability when I invoked an enhanced for-loop to 
 
 This project contains a a test class (**Homework4Test**) and a driver class (**DriverClass**). The test class contains
 a suite of ten unit tests, which exercise the *addLargeNumbers()* method using a variety of arguments. The Driver class
-contains a *main()* method, which calls  *addLargeNumbers()* several times.
+contains a *main()* method, which calls  *addLargeNumbers()* several times. **Do not try to run Homework4!!** It is
+*not* executable! Use *DriverClass* (or *Homework4Test*) instead.
 
 Incidentally, while developing a version of the program that used a **Stack** that implements the **Iterable** 
 interface, I was able to use *Git* to create a divergent branch of the project. Once I had the **Iterable** 
@@ -360,8 +361,8 @@ class Homework4 {
         int carry = 0;
         // Repeat the following steps until both stacks are empty.
         while (!firstOperand.isEmpty() || !secondOperand.isEmpty()) {
-            intermediateResult = 0;
-            intermediateResult += carry;
+            // intermediateResult = 0;  Hmm.., is this statement really necessary?
+            intermediateResult = carry; // I changed the operator from '+=' to '='
             if (!firstOperand.isEmpty()) {
                 intermediateResult += Integer.parseInt(firstOperand.pop().toString());
             }
@@ -520,4 +521,7 @@ but didn't get around to it.
 Okay, I guess that's gonna have to be *it*. I'll close with the usual caveat, that this README is a work in progress,
 with a format that is constantly evolving. One of these days I'll do some research to find out whether there is an
 industry-standard layout.
- 
+---
+Oops! I did it again! It's 10 PM! ☹️I found something in the code that I wanted to change. I couldn't resist!
+
+Also, I discovered that the emoji's I'm embedding in my markdown document are not surviving the conversion to PDF.
