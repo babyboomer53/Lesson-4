@@ -11,7 +11,7 @@ require some sleight of hand.
 In this exercise I endeavor to solve this dilemma by using the approach described in the instructor's problem statement.
 Specifically, in his algorithm, numbers are processed as strings (i.e., a sequence of characters) rather than in their
 binary "twos complement" format. Java supports integers only up to 9.23 quintillion. If an integer of type long is 
-stored in eight bytes, you might be wondering what happened to the eighth bit. Why isn't the largest integer twice the
+stored in eight bytes, you might be wondering what happened to the 64th bit. Why isn't the largest integer twice the
 size? Well, a discussion about the idiosyncrasies of twos complement representation of integers is beyond the scope of
 this document. Regardless, 9.23 quintillion is a very big number. But it *does* represent the limit in Java for positive
 integers. How would one surmount this obstacle?
