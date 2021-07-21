@@ -50,9 +50,8 @@ While implementing my solution, I used a Stack class from the example code provi
 instructor.
 
 I took this opportunity to learn more about iterators. Toward that end, I modified the **Stack** class to implement the
-Iterable interface, and added to it the requisite *iterator* method. Finally, I created an **Iterator** class. I was 
-able to utilize this extended capability when I invoked an enhanced for-loop to dump the contents of one of the 
-**Stack** objects. 😃
+**Iterable** interface, and added the requisite *iterator* method. Finally, I created an **Iterator** class. Thereafter,
+I was able to use objects of my **Stack** class with enhanced for-loops. 😃
 
 This project contains a a test class (**Homework4Test**) and a driver class (**DriverClass**). The test class contains
 a suite of ten unit tests, which exercise the *addLargeNumbers()* method using a variety of arguments. The Driver class
