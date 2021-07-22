@@ -260,12 +260,12 @@ class Homework4 {
      * contain  numeric characters.  Invalid  characters will  be  removed prior to
      * processing.  The arguments  will be  added together  and the  result will be
      * displayed on the console.
-     *
+     * <p>
      * This  method can  accommodate numbers  much  larger than  those supported  by
      * Java's  <i>long</i>  integer type  (approx. 9.23 quintillion). Theoretically,
      * this  method can  accommodate integers  that are  two billion  digits long  –
      * although nothing approaching that magnitude has been tested.
-     *
+     * <p>
      * Arguments containing empty strings are tolerated and are generally ignored.
      * An argument consisting of an empty string is equivalent to the value zero.
      * When both arguments are empty, no output is generated.
