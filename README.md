@@ -485,7 +485,7 @@ public class Homework4Test {
 ## Output
 ### Test Suite
 ![](test-results.png)
-### Homework4::addLargeNumbers()
+### DriverClass::main()
 ![](console-output.png)
 ## Summary
 Getting an early start on this assignment was both a blessing and a curse. Starting early gave me plenty of time to
