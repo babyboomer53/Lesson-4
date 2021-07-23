@@ -386,6 +386,7 @@ class DriverClass {
         Homework4.addLargeNumbers("592.25", "3,784.50");
         Homework4.addLargeNumbers(aLargeNumber, aLargerNumber);
         Homework4.addLargeNumbers("100.101", "400.201");
+        Homework4.addLargeNumbers("5600", "5700");
     }
 
 }
