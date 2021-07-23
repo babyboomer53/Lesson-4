@@ -498,7 +498,15 @@ public class Homework4Test {
 ### Test Suite
 ![](test-results.png)
 ### DriverClass::main()
-![](console-output.png)
+```text
+4376
+18282494082094300098761
+500
+11300
+9150
+
+Process finished with exit code 0
+```
 ## Summary
 Getting an early start on this assignment was both a blessing and a curse. Starting early gave me plenty of time to
 address those hidden bugs that inevitably pop up. On the other hand, having that much time allowed me to indulge my
