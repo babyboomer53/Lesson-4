@@ -304,6 +304,7 @@ class Homework4 {
             theSum.push(Integer.toString(intermediateResult % 10).charAt(0));  // Yikes!
             carry = intermediateResult / 10;    // Save the carry amount.
         }
+        if (carry > 0) { theSum.push(Integer.toString(carry).charAt(0)); }
         for (Character digit : theSum) System.out.print(digit);
         System.out.println();
     }

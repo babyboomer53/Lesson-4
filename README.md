@@ -327,12 +327,12 @@ class Homework4 {
      * contain  numeric characters.  Invalid  characters will  be  removed prior to
      * processing.  The arguments  will be  added together  and the  result will be
      * displayed on the console.
-     *
+     * <p>
      * This  method can  accommodate numbers  much  larger than  those supported  by
      * Java's  <i>long</i>  integer type  (approx. 9.23 quintillion). Theoretically,
      * this  method can  accommodate integers  that are  two billion  digits long  –
      * although nothing approaching that magnitude has been tested.
-     *
+     * <p>
      * Arguments containing empty strings are tolerated and are generally ignored.
      * An argument consisting of an empty string is equivalent to the value zero.
      * When both arguments are empty, no output is generated.
@@ -371,6 +371,7 @@ class Homework4 {
             theSum.push(Integer.toString(intermediateResult % 10).charAt(0));  // Yikes!
             carry = intermediateResult / 10;    // Save the carry amount.
         }
+        if (carry > 0) { theSum.push(Integer.toString(carry).charAt(0)); }
         for (Character digit : theSum) System.out.print(digit);
         System.out.println();
     }
@@ -444,7 +445,8 @@ public class Homework4Test {
         Homework4.addLargeNumbers("", "8129498165026350236");
         assertTrue(this.consoleContent.toString().contains("8129498165026350236"));
     }
-    
+
+
     @Test
     public void bothArgumentsAreEmpty() {
         Homework4.addLargeNumbers("", "");
@@ -479,6 +481,8 @@ public class Homework4Test {
     public void preliminaryExam() {
         Homework4.addLargeNumbers("592.25", "3,784.50");
         assertTrue(this.consoleContent.toString().contains("4376"));
+        Homework4.addLargeNumbers("5500", "5500");
+        assertTrue(this.consoleContent.toString().contains("11000"));
     }
 }
 ```
