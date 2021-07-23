@@ -301,11 +301,15 @@ class Homework4 {
                 intermediateResult += Integer.parseInt(secondOperand.pop().toString());
             }
             // Convert the integer (int) result to char and push it onto the stack.
-            theSum.push(Integer.toString(intermediateResult % 10).charAt(0));  // Yikes!
+            theSum.push(Integer.toString(intermediateResult % 10).charAt(0));
             carry = intermediateResult / 10;    // Save the carry amount.
         }
-        if (carry > 0) { theSum.push(Integer.toString(carry).charAt(0)); }
-        for (Character digit : theSum) System.out.print(digit);
+        if (carry > 0) {    // If there is a carry amount left dangling…
+            theSum.push(Integer.toString(carry).charAt(0)); // push it onto the result stack.
+        }
+        for (Character digit : theSum) {
+            System.out.print(digit);
+        }
         System.out.println();
     }
 
@@ -319,6 +323,8 @@ class DriverClass {
         Homework4.addLargeNumbers("592.25", "3,784.50");
         Homework4.addLargeNumbers(aLargeNumber, aLargerNumber);
         Homework4.addLargeNumbers("100.101", "400.201");
+        Homework4.addLargeNumbers("5600", "5700");
+        Homework4.addLargeNumbers("8300", "850");
     }
 
 }

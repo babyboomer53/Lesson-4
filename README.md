@@ -368,11 +368,15 @@ class Homework4 {
                 intermediateResult += Integer.parseInt(secondOperand.pop().toString());
             }
             // Convert the integer (int) result to char and push it onto the stack.
-            theSum.push(Integer.toString(intermediateResult % 10).charAt(0));  // Yikes!
+            theSum.push(Integer.toString(intermediateResult % 10).charAt(0));
             carry = intermediateResult / 10;    // Save the carry amount.
         }
-        if (carry > 0) { theSum.push(Integer.toString(carry).charAt(0)); }
-        for (Character digit : theSum) System.out.print(digit);
+        if (carry > 0) {    // If there is a carry amount left dangling…
+            theSum.push(Integer.toString(carry).charAt(0)); // push it onto the result stack.
+        }
+        for (Character digit : theSum) {
+            System.out.print(digit);
+        }
         System.out.println();
     }
 
@@ -387,6 +391,7 @@ class DriverClass {
         Homework4.addLargeNumbers(aLargeNumber, aLargerNumber);
         Homework4.addLargeNumbers("100.101", "400.201");
         Homework4.addLargeNumbers("5600", "5700");
+        Homework4.addLargeNumbers("8300", "850");
     }
 
 }
@@ -484,6 +489,8 @@ public class Homework4Test {
         assertTrue(this.consoleContent.toString().contains("4376"));
         Homework4.addLargeNumbers("5500", "5500");
         assertTrue(this.consoleContent.toString().contains("11000"));
+        Homework4.addLargeNumbers("9100", "900");
+        assertTrue(this.consoleContent.toString().contains("10000"));
     }
 }
 ```
@@ -529,3 +536,10 @@ industry-standard layout.
 Oops! I did it again! It's 10 PM! ☹️I found something in the code that I wanted to change. I couldn't resist!
 
 Also, I discovered that the emoji's I'm embedding in my markdown document are not surviving the conversion to PDF.
+
+---
+Wow! It's two days later and I've found a big bugaboo! And my test suite didn't catch it! Shame on me!
+
+Whenever the final addition operation generated a carry amount, that carry amount was being discarded. For example, 
+when the addition of 5000 and 5000 should be 10000, the answer generated was 0000. Or, when the addition of 9100 and
+900 should produce 10000, the answer generated would be 0000.

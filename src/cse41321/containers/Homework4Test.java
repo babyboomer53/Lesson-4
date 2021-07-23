@@ -89,5 +89,7 @@ public class Homework4Test {
         assertTrue(this.consoleContent.toString().contains("4376"));
         Homework4.addLargeNumbers("5500", "5500");
         assertTrue(this.consoleContent.toString().contains("11000"));
+        Homework4.addLargeNumbers("9100", "900");
+        assertTrue(this.consoleContent.toString().contains("10000"));
     }
 }
