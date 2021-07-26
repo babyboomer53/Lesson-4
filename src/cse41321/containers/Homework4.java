@@ -1,5 +1,6 @@
 package cse41321.containers;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -273,10 +274,11 @@ class Homework4 {
      * @param number1 a String representing an integer value
      * @param number2 a String representing an integer value
      */
-    static void addLargeNumbers(String number1, String number2) {
+    static String addLargeNumbers(String number1, String number2) {
         Stack<Character> firstOperand = new Stack<>();
         Stack<Character> secondOperand = new Stack<>();
         Stack<Character> theSum = new Stack<>();
+        StringBuilder stringBuilder = new StringBuilder();
         // Remove any commas or fractional components from the first argument.
         String noPunctuation = number1.replaceAll("[.].*$|[^0-9]", "");
         // Push the remaining characters in the first argument onto a stack.
@@ -308,9 +310,12 @@ class Homework4 {
             theSum.push(Integer.toString(carry).charAt(0)); // push it onto the result stack.
         }
         for (Character digit : theSum) {
+            stringBuilder.append(digit);
             System.out.print(digit);
         }
         System.out.println();
+        String reversed = stringBuilder.reverse().toString().replaceAll("([0-9]{3})", "$1,");
+        return new StringBuilder().append(reversed).reverse().toString();
     }
 
 }
@@ -320,11 +325,17 @@ class DriverClass {
     public static void main(String[] args) {
         String aLargeNumber = "8,129,498,165,026,350,236.5678";
         String aLargerNumber = "18,274,364,583,929,273,748,525.1234";
+        String aHumongousNumber = "1,234,556,709,877,654,234,389,809,987,678,098,911,232,335,657";
+        String anotherHumongousNumber = "7,789,891,212,333,446,789,653,445,689,656,778,890,032,345,433";
         Homework4.addLargeNumbers("592.25", "3,784.50");
         Homework4.addLargeNumbers(aLargeNumber, aLargerNumber);
         Homework4.addLargeNumbers("100.101", "400.201");
         Homework4.addLargeNumbers("5600", "5700");
         Homework4.addLargeNumbers("8300", "850");
+        System.out.printf("%nThe next operation adds two numbers, each of which contains %d digits!%n",
+                aHumongousNumber.length());
+        System.out.println(Homework4.addLargeNumbers(aHumongousNumber, anotherHumongousNumber));
+
     }
 
 }
