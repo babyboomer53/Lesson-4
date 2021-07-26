@@ -401,7 +401,7 @@ class DriverClass {
         Homework4.addLargeNumbers("5600", "5700");
         Homework4.addLargeNumbers("8300", "850");
         System.out.printf("%nThe next operation adds two numbers, each of which contains %d digits!%n",
-                aHumongousNumber.length());
+                aHumongousNumber.replaceAll("[^0-9]*","").length());
         System.out.println(Homework4.addLargeNumbers(aHumongousNumber, anotherHumongousNumber));
 
     }
