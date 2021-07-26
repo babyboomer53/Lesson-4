@@ -273,6 +273,7 @@ class Homework4 {
      *
      * @param number1 a String representing an integer value
      * @param number2 a String representing an integer value
+     * @return a String containing the sum of the equation
      */
     static String addLargeNumbers(String number1, String number2) {
         Stack<Character> firstOperand = new Stack<>();
