@@ -377,11 +377,9 @@ class Homework4 {
         if (carry > 0) {    // If there is a carry amount left dangling…
             theSum.push(Integer.toString(carry).charAt(0)); // push it onto the result stack.
         }
-        for (Character digit : theSum) {
-            stringBuilder.append(digit);
-            System.out.print(digit);
-        }
         System.out.println();
+        theSum.forEach(System.out::print);
+        theSum.forEach(stringBuilder::append);
         String reversed = stringBuilder.reverse().toString().replaceAll("([0-9]{3})", "$1,");
         return new StringBuilder().append(reversed).reverse().toString();
     }
@@ -400,9 +398,9 @@ class DriverClass {
         Homework4.addLargeNumbers("100.101", "400.201");
         Homework4.addLargeNumbers("5600", "5700");
         Homework4.addLargeNumbers("8300", "850");
-        System.out.printf("%nThe next operation adds two numbers, each of which contains %d digits!%n",
+        System.out.printf("%n%nThe next operation adds two numbers, each of which contains %d digits!%n",
                 aHumongousNumber.replaceAll("[^0-9]*","").length());
-        System.out.println(Homework4.addLargeNumbers(aHumongousNumber, anotherHumongousNumber));
+        System.out.println("\n"+Homework4.addLargeNumbers(aHumongousNumber, anotherHumongousNumber));
 
     }
 
