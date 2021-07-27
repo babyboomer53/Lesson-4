@@ -1,6 +1,5 @@
 package cse41321.containers;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -282,13 +281,13 @@ class Homework4 {
         StringBuilder stringBuilder = new StringBuilder();
         // Remove any commas or fractional components from the first argument.
         String noPunctuation = number1.replaceAll("[.].*$|[^0-9]", "");
-        // Push the remaining characters in the first argument onto a stack.
+        // Push the characters remaining in the first argument onto a stack.
         for (int index = 0; index < noPunctuation.length(); index++) {
             firstOperand.push(noPunctuation.charAt(index));
         }
         // Remove any commas or fractional components from the second argument.
         noPunctuation = number2.replaceAll("[.].*$|[^0-9]", "");
-        // Push the remaining characters in the second argument onto a stack.
+        // Push the characters remaining in the second argument onto a stack.
         for (int index = 0; index < noPunctuation.length(); index++) {
             secondOperand.push(noPunctuation.charAt(index));
         }
@@ -308,18 +307,24 @@ class Homework4 {
             carry = intermediateResult / 10;    // Save the carry amount.
         }
         if (carry > 0) {    // If there is a carry amount left dangling…
-            theSum.push(Integer.toString(carry).charAt(0)); // push it onto the result stack.
+            theSum.push(Integer.toString(carry).charAt(0)); // add it to the result.
         }
         System.out.println();
         theSum.forEach(System.out::print);
-        theSum.forEach(stringBuilder::append);
-        String reversed = stringBuilder.reverse().toString().replaceAll("([0-9]{3})", "$1,");
-        return new StringBuilder().append(reversed).reverse().toString();
+        for (Character character : theSum) {
+            stringBuilder.append(character);
+        }
+        // The string needs to be reversed so that, while scanning from back to front, the replaceAll() method can
+        // insert commas after every third digit.
+        String reversed = stringBuilder.reverse()
+                .toString() // Make it a String…
+                .replaceAll("([0-9]{3})", "$1,");   // and insert commas after every third digit.
+        return new StringBuilder().append(reversed).reverse().toString();   // Return the digits in their original order.
     }
 
 }
 
-class DriverClass {
+class Driver {
 
     public static void main(String[] args) {
         String aLargeNumber = "8,129,498,165,026,350,236.5678";
@@ -332,9 +337,8 @@ class DriverClass {
         Homework4.addLargeNumbers("5600", "5700");
         Homework4.addLargeNumbers("8300", "850");
         System.out.printf("%n%nThe next operation adds two numbers, each of which contains %d digits!%n",
-                aHumongousNumber.replaceAll("[^0-9]*","").length());
-        System.out.println("\n"+Homework4.addLargeNumbers(aHumongousNumber, anotherHumongousNumber));
-
+                aHumongousNumber.replaceAll("[^0-9]*", "").length());
+        System.out.println("\n" + Homework4.addLargeNumbers(aHumongousNumber, anotherHumongousNumber));
     }
 
 }

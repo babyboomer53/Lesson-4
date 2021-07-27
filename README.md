@@ -42,21 +42,21 @@ addLargeNumbers(number1, number2)
         push result onto the result stack if it is not zero
     pop numbers from the result stack and display them
 ```
-The combination of the diagram and this pseudocode helped clarify the concept. Once I understood the concept, I was
-good to go.
+The combination of the diagram and this pseudocode helped clarify the concept.
+
 ### Solution
-While implementing my solution, I used a Stack class from the example code provided by the instructor. For the
+While implementing my solution, I used a **Stack** class from the example code provided by the instructor. For the
 **SinglyLinkedList** class used by the **Stack** class, I borrowed more code from the examples provided by the
 instructor.
 
 I took this opportunity to learn more about iterators. Toward that end, I modified the **Stack** class to implement the
-**Iterable** interface, and added the requisite *iterator* method. Finally, I created an **Iterator** class. Thereafter,
+**Iterable** interface, and added the requisite *iterator()* method. Finally, I created an **Iterator** class. Thereafter,
 I was able to use objects of my **Stack** class with enhanced for-loops. 😃
 
-This project contains a a test class (**Homework4Test**) and a driver class (**DriverClass**). The test class contains
+This project contains a a test class (**Homework4Test**) and a driver class (**Driver**). The test class contains
 a suite of ten unit tests, which exercise the *addLargeNumbers()* method using a variety of arguments. The Driver class
 contains a *main()* method, which calls  *addLargeNumbers()* several times. **Do not try to run Homework4!!** It is
-*not* executable! Use *DriverClass* (or *Homework4Test*) instead.
+*not* executable! Use *Driver* (or *Homework4Test*) instead.
 
 Incidentally, while developing a version of the program that used a **Stack** that implements the **Iterable** 
 interface, I was able to use *Git* to create a divergent branch of the project. Once I had the **Iterable** 
@@ -67,7 +67,6 @@ implementation working, I merged the branches to make it whole again. 😃
 ```java
 package cse41321.containers;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -349,13 +348,13 @@ class Homework4 {
         StringBuilder stringBuilder = new StringBuilder();
         // Remove any commas or fractional components from the first argument.
         String noPunctuation = number1.replaceAll("[.].*$|[^0-9]", "");
-        // Push the remaining characters in the first argument onto a stack.
+        // Push the characters remaining in the first argument onto a stack.
         for (int index = 0; index < noPunctuation.length(); index++) {
             firstOperand.push(noPunctuation.charAt(index));
         }
         // Remove any commas or fractional components from the second argument.
         noPunctuation = number2.replaceAll("[.].*$|[^0-9]", "");
-        // Push the remaining characters in the second argument onto a stack.
+        // Push the characters remaining in the second argument onto a stack.
         for (int index = 0; index < noPunctuation.length(); index++) {
             secondOperand.push(noPunctuation.charAt(index));
         }
@@ -375,18 +374,24 @@ class Homework4 {
             carry = intermediateResult / 10;    // Save the carry amount.
         }
         if (carry > 0) {    // If there is a carry amount left dangling…
-            theSum.push(Integer.toString(carry).charAt(0)); // push it onto the result stack.
+            theSum.push(Integer.toString(carry).charAt(0)); // add it to the result.
         }
         System.out.println();
         theSum.forEach(System.out::print);
-        theSum.forEach(stringBuilder::append);
-        String reversed = stringBuilder.reverse().toString().replaceAll("([0-9]{3})", "$1,");
-        return new StringBuilder().append(reversed).reverse().toString();
+        for (Character character : theSum) {
+            stringBuilder.append(character);
+        }
+        // The string needs to be reversed so that, while scanning from back to front, the replaceAll() method can
+        // insert commas after every third digit.
+        String reversed = stringBuilder.reverse()
+                .toString() // Make it a String…
+                .replaceAll("([0-9]{3})", "$1,");   // and insert commas after every third digit.
+        return new StringBuilder().append(reversed).reverse().toString();   // Return the digits in their original order.
     }
 
 }
 
-class DriverClass {
+class Driver {
 
     public static void main(String[] args) {
         String aLargeNumber = "8,129,498,165,026,350,236.5678";
@@ -399,9 +404,8 @@ class DriverClass {
         Homework4.addLargeNumbers("5600", "5700");
         Homework4.addLargeNumbers("8300", "850");
         System.out.printf("%n%nThe next operation adds two numbers, each of which contains %d digits!%n",
-                aHumongousNumber.replaceAll("[^0-9]*","").length());
-        System.out.println("\n"+Homework4.addLargeNumbers(aHumongousNumber, anotherHumongousNumber));
-
+                aHumongousNumber.replaceAll("[^0-9]*", "").length());
+        System.out.println("\n" + Homework4.addLargeNumbers(aHumongousNumber, anotherHumongousNumber));
     }
 
 }
@@ -507,13 +511,18 @@ public class Homework4Test {
 ## Output
 ### Test Suite
 ![](test-results.png)
-### DriverClass::main()
+### Driver::main()
 ```text
 4376
 18282494082094300098761
 500
 11300
 9150
+
+The next operation adds two numbers, each of which contains 46 digits!
+
+9024447922211101024043255677334877801264681090
+9,024,447,922,211,101,024,043,255,677,334,877,801,264,681,090
 
 Process finished with exit code 0
 ```
