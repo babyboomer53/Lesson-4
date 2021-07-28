@@ -373,7 +373,7 @@ class Homework4 {
             theSum.push(Integer.toString(intermediateResult % 10).charAt(0));
             carry = intermediateResult / 10;    // Save the carry amount.
         }
-        if (carry > 0) {    // If there is a carry amount left dangling…
+        if (carry > 0) {    // If there is a carry amount left over…
             theSum.push(Integer.toString(carry).charAt(0)); // add it to the result.
         }
         System.out.println();
@@ -381,12 +381,17 @@ class Homework4 {
         for (Character character : theSum) {
             stringBuilder.append(character);
         }
-        // The string needs to be reversed so that, while scanning from back to front, the replaceAll() method can
-        // insert commas after every third digit.
+        /*
+        The digits of the sum need to be reversed so that, while scanning from
+        back to front, the replaceAll() method can insert commas after every
+        third digit.
+         */
         String reversed = stringBuilder.reverse()
                 .toString() // Make it a String…
-                .replaceAll("([0-9]{3})", "$1,");   // and insert commas after every third digit.
-        return new StringBuilder().append(reversed).reverse().toString();   // Return the digits in their original order.
+                // and insert a comma between each group of three digits…
+                .replaceAll("([0-9]{3})", "$1,");
+        // Return the digits in their original order.
+        return new StringBuilder().append(reversed).reverse().toString();
     }
 
 }
